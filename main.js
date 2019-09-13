@@ -7,6 +7,7 @@ const app = express();
 
 /* eslint-disable global-require */
 const Routes = {
+  home: require('./routes/home'),
   v1: {
     Problems: require('./routes/v1/problems'),
     Publications: require('./routes/v1/publications'),
@@ -15,22 +16,23 @@ const Routes = {
 };
 /* eslint-enable global-require */
 
-app.use('/apidocs', express.static('apidocs'));
+app.use('/docs', express.static('docs'));
 app.use('/public', express.static('public'));
 
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  res.send('Science Octopus API');
-});
+app.get('/', Routes.home);
 
-app.use('/api/v1/problems/getByID/:id', Routes.v1.Problems.getProblemByID);
-app.use('/api/v1/publications/getByID/:id', Routes.v1.Publications.getPublicationByID);
-app.use('/api/v1/users/getByID/:id', Routes.v1.Users.getUserByID);
+app.get('/v1/problems/getByID/:id', Routes.v1.Problems.getProblemByID);
 
-app.use((err, req, res) => {
+app.get('/v1/publications/getByID/:id', Routes.v1.Publications.getPublicationByID);
+app.get('/v1/publications/find', Routes.v1.Publications.findPublications);
+
+app.get('/v1/users/getByID/:id', Routes.v1.Users.getUserByID);
+
+app.use((err, req, res, next) => {
   console.error(err.stack);
-  return res.status(500).send('500 Internal Server Error');
+  return res.sendStatus(500);
 });
 
 app.use((req, res) => {

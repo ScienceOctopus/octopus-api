@@ -1,23 +1,18 @@
 const ProblemsLib = require('../../lib/problems');
 
 /**
- * @api {get} /api/v1/problems/getById/:id Get Problem by ID
+ * @api {get} /v1/problems/getByID/:id Get Problem by ID
  * @apiName getProblemByID
  * @apiGroup Problems
  * @apiVersion 1.0.0
- * @apiSampleRequest /api/v1/problems/getById/:id
+ * @apiSampleRequest /v1/problems/getByID/:id
  *
  * @apiParam {Number} id Problem's unique ID.
  *
- * @apiSuccess {Integer} id Unique identifier
- * @apiSuccess {String} title Title of the problem
- * @apiSuccess {String} summary Summary of the problem
- * @apiSuccess {String} createdByUser ID of user who created the Problem
- * @apiSuccess {String} dateCreated Date of Problem's creation
- * @apiSuccess {Integer} dateLastActivity Date of Problem's last activity
+ * @apiUse ProblemObject
  */
 function getProblemByID(req, res) {
-  const problemID = req.params.id;
+  const problemID = Number(req.params.id);
 
   return ProblemsLib.getProblemByID(problemID, (problemErr, problemData) => {
     if (problemErr) {

@@ -1,29 +1,15 @@
 const PublicationsLib = require('../../lib/publications');
 
 /**
- * @api {get} /api/v1/publications/getById/:id Get Publication by ID
+ * @api {get} /v1/publications/getByID/:id Get Publication by ID
  * @apiName getPublicationByID
  * @apiGroup Publications
  * @apiVersion 1.0.0
- * @apiSampleRequest /api/v1/publications/getById/:id
+ * @apiSampleRequest /v1/publications/getByID/:id
  *
  * @apiParam {Number} id Publication's unique ID.
  *
- * @apiSuccess {Integer} id Unique identifier
- * @apiSuccess {Integer} problem ID of the Problem to which this Publication unit belongs
- * @apiSuccess {Integer} stage ID of that Problem's stage (hypothesis, etc)
- * @apiSuccess {String} title Title of the Publication unit
- * @apiSuccess {String} summary Summary of the Publication unit
- * @apiSuccess {String} text Full text of the Publication unit
- * @apiSuccess {Array} files Files uploaded by the authors at all stages of the process
- * @apiSuccess {String} status Indicates status of the publication (DRAFT / LIVE / ARCHIVED / FINAL / PUBLISHED)
- * @apiSuccess {Integer} revision Indicates the revision of this Publication unit
- * @apiSuccess {String} metaFunding Information about funding body
- * @apiSuccess {String} metaConflict Information about conflict of interest
- * @apiSuccess {String} metaEditor Information about editor
- * @apiSuccess {Integer} createdByUser ID of User who created this Publication unit
- * @apiSuccess {String} dateCreated Date of Publication unit creation
- * @apiSuccess {String} dateLastActivity Date of last activity in the Publication unit
+ * @apiUse PublicationObject
  */
 function getPublicationByID(req, res) {
   const publicationID = Number(req.params.id);
@@ -37,6 +23,40 @@ function getPublicationByID(req, res) {
   });
 }
 
+/**
+ * @api {get} /v1/publications/find Find Publication based on specified criteria
+ * @apiName searchPublications
+ * @apiGroup Publications
+ * @apiVersion 1.0.0
+ * @apiSampleRequest /v1/publications/find
+ *
+ * @apiParam {Integer} problemID ID of Problem to which the publication must be linked to
+ * @apiParam {Integer} stageID ID of Stage at which the publication has been linked
+ * @apiParam {Integer} createdByUser ID of User who created the publication
+ *
+ * @apiSuccess {Array} results Array containing Publications matching the specified criteria
+ */
+function findPublications(req, res) {
+  const problemID = Number(req.query.problemID);
+  const stageID = Number(req.query.stageID);
+  const createdByUser = Number(req.query.createdByUser);
+
+  const query = {};
+
+  if (problemID) query.problem = problemID;
+  if (stageID) query.stage = stageID;
+  if (createdByUser) query.stage = createdByUser;
+
+  return PublicationsLib.findPublications(query, (publicationErr, publicationData) => {
+    if (publicationErr) {
+      return res.send('ERROR');
+    }
+
+    return res.send(publicationData);
+  });
+}
+
 module.exports = {
   getPublicationByID,
+  findPublications,
 };

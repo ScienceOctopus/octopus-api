@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node main.js",
     "lint": "eslint .",
-    "generate-docs": "apidoc -i routes/ -o apidocs/",
+    "generate-docs": "apidoc -i routes/ -o docs/",
     "postinstall": "echo \"Generating docs...\" && npm run --silent generate-docs"
   },
   "keywords": [],
