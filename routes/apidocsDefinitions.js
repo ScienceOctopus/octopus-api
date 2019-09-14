@@ -28,14 +28,3 @@
  * @apiSuccess {String} dateCreated Date of user's last activity
  * @apiSuccess {Integer} dateLastActivity Group to which user belongs
  */
-
-/**
- * @apiDefine ProblemObject
- *
- * @apiSuccess {Integer} id Unique identifier
- * @apiSuccess {String} title Title of the problem
- * @apiSuccess {String} summary Summary of the problem
- * @apiSuccess {String} createdByUser ID of user who created the Problem
- * @apiSuccess {String} dateCreated Date of Problem's creation
- * @apiSuccess {Integer} dateLastActivity Date of Problem's last activity
- */

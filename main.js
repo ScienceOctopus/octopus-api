@@ -11,8 +11,8 @@ const app = express();
 const Routes = {
   home: require('./routes/home'),
   v1: {
-    Problems: require('./routes/v1/problems'),
     Publications: require('./routes/v1/publications'),
+    PublicationTypes: require('./routes/v1/publicationTypes'),
     Users: require('./routes/v1/users'),
   },
 };
@@ -25,8 +25,7 @@ app.use(bodyParser.json());
 
 app.get('/', Routes.home);
 
-app.get('/v1/problems/getByID/:id', Routes.v1.Problems.getProblemByID);
-app.get('/v1/problems/find', Routes.v1.Problems.findProblems);
+app.get('/v1/publicationTypes', Routes.v1.PublicationTypes.getPublicationTypes);
 
 app.get('/v1/publications/getByID/:id', Routes.v1.Publications.getPublicationByID);
 app.get('/v1/publications/find', Routes.v1.Publications.findPublications);
