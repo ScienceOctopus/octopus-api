@@ -13,6 +13,7 @@ const problem = {
   id: 1,
   title: 'Example Problem',
   summary: 'Problem Summary goes here',
+  stages: ['Hypotheses', 'Methods/Protocols', 'Data/Results', 'Analyses', 'Interpretations', 'Applications'],
   createdByUser: 1,
   dateCreated: '2019-09-01 00:00:00.000',
   dateLastActivity: '2019-09-01 00:00:00.000',
@@ -23,9 +24,9 @@ const publication = {
   problem: 1,
   stage: 1,
 
-  title: 'Publication Title goes here',
-  summary: 'Publication Summary goes here',
-  text: 'Publication Text goes here',
+  title: 'Example Publication',
+  summary: 'Example Publication Summary',
+  text: 'Example Publication Text',
   files: [],
 
   status: 'LIVE',
@@ -40,7 +41,6 @@ const publication = {
   dateLastActivity: '2019-09-01 00:00:00.000',
 
   tags: [],
-  stages: ['Hypotheses', 'Methods/Protocols', 'Data/Results', 'Analyses', 'Interpretations', 'Applications'],
   collaborators: [
     {
       userID: 1,

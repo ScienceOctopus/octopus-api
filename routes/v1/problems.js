@@ -23,6 +23,34 @@ function getProblemByID(req, res) {
   });
 }
 
+/**
+ * @api {get} /v1/problems/find Find Problems based on specified criteria
+ * @apiName findProblems
+ * @apiGroup Publications
+ * @apiVersion 1.0.0
+ * @apiSampleRequest /v1/problems/find
+ *
+ * @apiParam {Integer} createdByUser ID of User who created the publication
+ *
+ * @apiSuccess {Array} results Array containing Problems matching the specified criteria
+ */
+function findProblems(req, res) {
+  const createdByUser = Number(req.query.createdByUser);
+
+  const query = {};
+
+  if (createdByUser) query.createdByUser = createdByUser;
+
+  return ProblemsLib.findProblems(query, (publicationErr, publicationData) => {
+    if (publicationErr) {
+      return res.send('ERROR');
+    }
+
+    return res.json({ total: publicationData.length, results: publicationData });
+  });
+}
+
 module.exports = {
   getProblemByID,
+  findProblems,
 };

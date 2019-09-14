@@ -25,7 +25,7 @@ function getPublicationByID(req, res) {
 
 /**
  * @api {get} /v1/publications/find Find Publication based on specified criteria
- * @apiName searchPublications
+ * @apiName findPublications
  * @apiGroup Publications
  * @apiVersion 1.0.0
  * @apiSampleRequest /v1/publications/find
@@ -45,14 +45,14 @@ function findPublications(req, res) {
 
   if (problemID) query.problem = problemID;
   if (stageID) query.stage = stageID;
-  if (createdByUser) query.stage = createdByUser;
+  if (createdByUser) query.createdByUser = createdByUser;
 
   return PublicationsLib.findPublications(query, (publicationErr, publicationData) => {
     if (publicationErr) {
       return res.send('ERROR');
     }
 
-    return res.send(publicationData);
+    return res.json({ total: publicationData.length, results: publicationData });
   });
 }
 

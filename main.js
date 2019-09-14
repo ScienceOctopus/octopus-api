@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const bodyParser = require('body-parser');
 const express = require('express');
 
@@ -24,6 +26,7 @@ app.use(bodyParser.json());
 app.get('/', Routes.home);
 
 app.get('/v1/problems/getByID/:id', Routes.v1.Problems.getProblemByID);
+app.get('/v1/problems/find', Routes.v1.Problems.findProblems);
 
 app.get('/v1/publications/getByID/:id', Routes.v1.Publications.getPublicationByID);
 app.get('/v1/publications/find', Routes.v1.Publications.findPublications);
