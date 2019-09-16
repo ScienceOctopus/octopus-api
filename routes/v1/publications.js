@@ -37,17 +37,12 @@ function getPublicationByID(req, res) {
  * @apiSuccess {Array} results Array containing Publications matching the specified criteria
  */
 function findPublications(req, res) {
-  const parentProblem = Number(req.query.parentProblem);
-  const type = Number(req.query.type);
-  const createdByUser = Number(req.query.createdByUser);
-  const phrase = req.query.phrase;
-
-  const query = {};
-
-  if (parentProblem) query.problem = parentProblem;
-  if (type) query.stage = type;
-  if (createdByUser) query.createdByUser = createdByUser;
-  if (phrase) query.phrase = phrase;
+  const query = {
+    parentProblem: Number(req.query.parentProblem),
+    createdByUser: Number(req.query.createdByUser),
+    type: req.query.type,
+    phrase: req.query.phrase,
+  };
 
   return PublicationsModel.findPublications(query, (publicationErr, publicationData) => {
     if (publicationErr) {
