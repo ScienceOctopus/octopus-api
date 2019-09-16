@@ -1,4 +1,4 @@
-const UsersLib = require('../../lib/users');
+const UsersModel = require('../../models/users');
 
 /**
  * @api {get} /v1/users/getByID/:id Get User by ID
@@ -14,7 +14,7 @@ const UsersLib = require('../../lib/users');
 function getUserByID(req, res) {
   const userID = Number(req.params.id);
 
-  return UsersLib.getUserByID(userID, (userErr, userData) => {
+  return UsersModel.getUserByID(userID, (userErr, userData) => {
     if (userErr) {
       return res.send(`ERROR: ${userErr}`);
     }

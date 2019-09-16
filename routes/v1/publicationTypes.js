@@ -1,4 +1,4 @@
-const PublicationTypesModel = require('../../lib/publicationTypes');
+const PublicationTypesModel = require('../../models/publicationTypes');
 
 /**
  * @api {get} /v1/publications/find Find Publication based on specified criteria

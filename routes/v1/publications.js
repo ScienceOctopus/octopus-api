@@ -1,4 +1,4 @@
-const PublicationsLib = require('../../lib/publications');
+const PublicationsModel = require('../../models/publications');
 
 /**
  * @api {get} /v1/publications/getByID/:id Get Publication by ID
@@ -14,7 +14,7 @@ const PublicationsLib = require('../../lib/publications');
 function getPublicationByID(req, res) {
   const publicationID = Number(req.params.id);
 
-  return PublicationsLib.getPublicationByID(publicationID, (publicationErr, publicationData) => {
+  return PublicationsModel.getPublicationByID(publicationID, (publicationErr, publicationData) => {
     if (publicationErr) {
       return res.send('ERROR');
     }
@@ -37,17 +37,19 @@ function getPublicationByID(req, res) {
  * @apiSuccess {Array} results Array containing Publications matching the specified criteria
  */
 function findPublications(req, res) {
-  const problemID = Number(req.query.problemID);
-  const stageID = Number(req.query.stageID);
+  const parentProblem = Number(req.query.parentProblem);
+  const type = Number(req.query.type);
   const createdByUser = Number(req.query.createdByUser);
+  const phrase = req.query.phrase;
 
   const query = {};
 
-  if (problemID) query.problem = problemID;
-  if (stageID) query.stage = stageID;
+  if (parentProblem) query.problem = parentProblem;
+  if (type) query.stage = type;
   if (createdByUser) query.createdByUser = createdByUser;
+  if (phrase) query.phrase = phrase;
 
-  return PublicationsLib.findPublications(query, (publicationErr, publicationData) => {
+  return PublicationsModel.findPublications(query, (publicationErr, publicationData) => {
     if (publicationErr) {
       return res.send('ERROR');
     }

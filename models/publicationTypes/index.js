@@ -1,4 +1,4 @@
-const PublicationTypesModel = require('../mongo').publicationTypes;
+const PublicationTypesModel = require('../../lib/mongo').publicationTypes;
 
 function getAllTypes(callback) {
   return PublicationTypesModel.find({}, callback);
