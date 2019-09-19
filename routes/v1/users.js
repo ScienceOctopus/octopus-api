@@ -12,7 +12,7 @@ const UsersModel = require('../../models/users');
  * @apiUse UserObject
  */
 function getUserByID(req, res) {
-  const userID = Number(req.params.id);
+  const userID = String(req.params.id);
 
   return UsersModel.getUserByID(userID, (userErr, userData) => {
     if (userErr) {

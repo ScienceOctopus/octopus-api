@@ -12,7 +12,7 @@ const PublicationsModel = require('../../models/publications');
  * @apiUse PublicationObject
  */
 function getPublicationByID(req, res) {
-  const publicationID = Number(req.params.id);
+  const publicationID = String(req.params.id);
 
   return PublicationsModel.getPublicationByID(publicationID, (publicationErr, publicationData) => {
     if (publicationErr) {
