@@ -22,11 +22,13 @@ app.use('/docs', express.static('docs'));
 app.use('/public', express.static('public'));
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', Routes.home);
 
 app.get('/v1/publicationTypes', Routes.v1.PublicationTypes.getPublicationTypes);
 
+app.post('/v1/publications/create', Routes.v1.Publications.createPublication);
 app.get('/v1/publications/getByID/:id', Routes.v1.Publications.getPublicationByID);
 app.get('/v1/publications/find', Routes.v1.Publications.findPublications);
 

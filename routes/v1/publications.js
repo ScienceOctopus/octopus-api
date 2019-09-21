@@ -1,4 +1,28 @@
+const _ = require('lodash');
 const PublicationsModel = require('../../models/publications');
+
+/**
+ * @api {post} /v1/publications/createPublication Create a Publication
+ * @apiName createPublication
+ * @apiGroup Publications
+ * @apiVersion 1.0.0
+ * @apiSampleRequest /v1/publications/createPublication
+ *
+ * @apiParam {Object} data Publication's data.
+ *
+ * @apiUse PublicationObject
+ */
+function createPublication(req, res) {
+  const publicationData = _.merge({}, req.body);
+
+  return PublicationsModel.createPublication(publicationData, (publicationErr, publicationResult) => {
+    if (publicationErr) {
+      return res.send('ERROR');
+    }
+
+    return res.json(publicationResult);
+  });
+}
 
 /**
  * @api {get} /v1/publications/getByID/:id Get Publication by ID
@@ -19,7 +43,7 @@ function getPublicationByID(req, res) {
       return res.send('ERROR');
     }
 
-    return res.send(publicationData);
+    return res.json(publicationData);
   });
 }
 
@@ -54,6 +78,7 @@ function findPublications(req, res) {
 }
 
 module.exports = {
+  createPublication,
   getPublicationByID,
   findPublications,
 };

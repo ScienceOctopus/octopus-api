@@ -1,5 +1,9 @@
 const PublicationsModel = require('../../lib/mongo').publications;
 
+function createPublication(data, callback) {
+  return PublicationsModel.insertOne(data, callback);
+}
+
 function getPublicationByID(id, callback) {
   return PublicationsModel.getByID(id, callback);
 }
@@ -36,6 +40,7 @@ function findPublications(query, callback) {
 }
 
 module.exports = {
+  createPublication,
   getPublicationByID,
   findPublications,
 };
