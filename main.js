@@ -3,6 +3,8 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const express = require('express');
 
+const auth = require('./lib/auth');
+
 const port = process.env.PORT || 4000;
 
 const app = express();
@@ -25,6 +27,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', Routes.home);
+
+app.use('/v1', (req, res, next) => {
+  auth.verifyCredentials(req.headers.authkey, req.headers.authsecret, (err, success) => {
+    if (!success) {
+      return res.send('Authentication required');
+    }
+
+    return next();
+  });
+});
 
 app.get('/v1/publicationTypes', Routes.v1.PublicationTypes.getPublicationTypes);
 
