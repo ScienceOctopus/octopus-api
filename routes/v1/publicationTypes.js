@@ -1,3 +1,4 @@
+const debug = require('debug');
 const PublicationTypesModel = require('../../models/publicationTypes');
 
 /**
@@ -16,6 +17,7 @@ const PublicationTypesModel = require('../../models/publicationTypes');
 function getPublicationTypes(req, res) {
   return PublicationTypesModel.getAllTypes((publicationErr, publicationData) => {
     if (publicationErr) {
+      debug('octopus:api:error')(`Error in getPublicationTypes: ${publicationErr}`);
       return res.send('ERROR');
     }
 

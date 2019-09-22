@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const bodyParser = require('body-parser');
+const debug = require('debug');
 const express = require('express');
 
 const auth = require('./lib/auth');
@@ -32,6 +33,7 @@ app.get('/', Routes.home);
 app.use('/v1', (req, res, next) => {
   auth.verifyCredentials(req.headers.authkey, req.headers.authsecret, (err, success) => {
     if (!success) {
+      debug('octopus:api:debug')(`API Authentication failed with ${req.headers.authkey}:${req.headers.authsecret}`);
       return res.send('Authentication required');
     }
 
@@ -50,11 +52,12 @@ app.get('/v1/users/getByORCiD/:orcid', Routes.v1.Users.getUserByORCiD);
 app.post('/v1/users/upsert', Routes.v1.Users.upsertUser);
 
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  debug('octopus:api:error')(err.stack);
   return res.sendStatus(500);
 });
 
 app.use((req, res) => {
+  debug('octopus:api:error')(`Error 404 on URL: ${req.url}`);
   return res.sendStatus(404);
 });
 

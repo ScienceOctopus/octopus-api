@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const debug = require('debug');
 const PublicationsModel = require('../../models/publications');
 
 /**
@@ -17,6 +18,8 @@ function createPublication(req, res) {
 
   return PublicationsModel.createPublication(publicationData, (publicationErr, publicationResult) => {
     if (publicationErr) {
+      debug('octopus:api:error')(`Error in createPublication: ${publicationErr}`);
+      debug('octopus:api:error')(`Error in createPublication data: ${publicationData}`);
       return res.send('ERROR');
     }
 
@@ -40,6 +43,7 @@ function getPublicationByID(req, res) {
 
   return PublicationsModel.getPublicationByID(publicationID, (publicationErr, publicationData) => {
     if (publicationErr) {
+      debug('octopus:api:error')(`Error in getPublicationByID for ${publicationID}: ${publicationErr}`);
       return res.send('ERROR');
     }
 
@@ -70,6 +74,8 @@ function findPublications(req, res) {
 
   return PublicationsModel.findPublications(query, (publicationErr, publicationData) => {
     if (publicationErr) {
+      debug('octopus:api:error')(`Error in findPublications: ${publicationErr}`);
+      debug('octopus:api:error')(`Error in findPublications query: ${query}`);
       return res.send('ERROR');
     }
 

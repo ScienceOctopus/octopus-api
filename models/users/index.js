@@ -7,7 +7,6 @@ function getUserByID(id, callback) {
 
 function getUserByORCiD(orcid, callback) {
   return UsersModel.find({ orcid }, (err, data) => {
-    // console.log(data);
     return callback(null, _.first(data));
   });
 }

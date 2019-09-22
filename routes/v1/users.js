@@ -1,3 +1,4 @@
+const debug = require('debug');
 const UsersModel = require('../../models/users');
 
 /**
@@ -16,7 +17,8 @@ function getUserByID(req, res) {
 
   return UsersModel.getUserByID(userID, (userErr, userData) => {
     if (userErr) {
-      return res.send(`ERROR: ${userErr}`);
+      debug('octopus:api:error')(`Error in getUserByID(${userID}): ${userErr}`);
+      return res.send('ERROR');
     }
 
     return res.send(userData);
@@ -38,7 +40,8 @@ function getUserByORCiD(req, res) {
 
   return UsersModel.getUserByORCiD(orcid, (userErr, userData) => {
     if (userErr) {
-      return res.send(`ERROR: ${userErr}`);
+      debug('octopus:api:error')(`Error in getUserByID(${orcid}): ${userErr}`);
+      return res.send('ERROR');
     }
 
     return res.send(userData);
@@ -58,22 +61,19 @@ function getUserByORCiD(req, res) {
  * @apiUse UserObject
  */
 function upsertUser(req, res) {
-  // const newData = req.body;
-
-  // console.log('req.body', typeof req.body, req.body);
-  // console.log('Object.keys(newData)', );
-
   const actualData = Object.keys(req.body)[0];
   const newData = JSON.parse(actualData);
-  console.log('newData', newData);
+  debug('octopus:api:trace')(`Upserting user: ${newData}`);
 
   if (!newData || !newData.where || !newData.data) {
+    debug('octopus:api:error')(`Incomplete data provided for upsertUser: ${newData}`);
     return res.send('ERROR: "where" and "data" must be defined');
   }
 
   return UsersModel.upsertUser(newData.where, newData.data, (userErr, userData) => {
     if (userErr) {
-      return res.send(`ERROR: ${userErr}`);
+      debug('octopus:api:error')(`Error in upsertUser: ${userErr}`);
+      return res.send('ERROR');
     }
 
     return res.json(userData);
