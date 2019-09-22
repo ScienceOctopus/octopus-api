@@ -1,9 +1,10 @@
 const Models = require('../lib/mongo');
 
-const users = require('./sampleData/users');
-const publicationTypes = require('./sampleData/publicationTypes');
+const apiAuth = require('./sampleData/apiAuth');
 const publications = require('./sampleData/publications');
+const publicationTypes = require('./sampleData/publicationTypes');
 const ratings = require('./sampleData/ratings');
+const users = require('./sampleData/users');
 
 console.log('Inserting users');
 Models.users.insertMany(users, (err, data) => {
@@ -13,7 +14,6 @@ Models.users.insertMany(users, (err, data) => {
   console.log(`Inserted ${data.insertedCount} users.`);
 });
 
-
 console.log('Inserting publication types');
 Models.publicationTypes.insertMany(publicationTypes, (err, data) => {
   if (err) {
@@ -21,7 +21,6 @@ Models.publicationTypes.insertMany(publicationTypes, (err, data) => {
   }
   console.log(`Inserted ${data.insertedCount} publication types.`);
 });
-
 
 console.log('Inserting publications');
 Models.publications.insertMany(publications, (err, data) => {
@@ -37,4 +36,12 @@ Models.ratings.insertMany(ratings, (err, data) => {
     console.log('Error:', err);
   }
   console.log(`Inserted ${data.insertedCount} ratings.`);
+});
+
+console.log('Inserting auth clients');
+Models.apiAuth.insertMany(apiAuth, (err, data) => {
+  if (err) {
+    console.log('Error:', err);
+  }
+  console.log(`Inserted ${data.insertedCount} users.`);
 });

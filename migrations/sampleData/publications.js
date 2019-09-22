@@ -1,51 +1,21 @@
 const publication1 = {
-  id: 1,
   type: 'PROBLEM',
   status: 'LIVE',
-  parentProblem: 0,
-  parentPublication: 0,
+  parentProblems: ['0'],
+  parentPublications: ['0'],
   revision: 1,
-
   title: 'Democratisation of science publishing',
   summary: 'Science publishing is broken. Octopus aims to fix it.',
   text: 'In this publication we will explore current challenges with science publishing and explore Octopus as a solution to these problems.',
-
-  metaFunding: '',
-  metaConflict: '',
-  metaEditor: '',
-
-  createdByUser: 1,
+  fundingStatement: '',
+  coiDeclaration: '',
+  createdByUser: '0000-0000-0000-0000',
   dateCreated: '2019-09-01 00:00:00.000',
   dateLastActivity: '2019-09-01 00:00:00.000',
-
-  tags: [],
-  collaborators: [],
-};
-
-const publication2 = {
-  id: 2,
-  type: 'HYPOTHESIS',
-  status: 'LIVE',
-  parentProblem: 1,
-  parentPublication: 1,
-  revision: 1,
-
-  title: 'Octopus - science publishing done right.',
-  summary: 'Octopus is a new publishing paradigm designed for researchers, by researchers.',
-  text: 'Designed to replace journals and papers, Octopus is free to use and gets your work out there much more quickly, to a wider audience and ensures you get maximum credit for the work you do, whether that’s coming up with hypotheses, designing protocols, collecting data, doing analyses or writing reviews.',
-
-  metaFunding: '',
-  metaConflict: '',
-  metaEditor: '',
-
-  createdByUser: 1,
-  dateCreated: '2019-09-01 00:00:00.000',
-  dateLastActivity: '2019-09-01 00:00:00.000',
-
-  tags: [],
+  keywords: [],
   collaborators: [
     {
-      userID: 1,
+      userID: '0000-0000-0000-0000',
       role: 'author',
       status: 'CONFIRMED',
       dateAdded: '2019-09-01 00:00:00.000',
@@ -53,9 +23,61 @@ const publication2 = {
   ],
 };
 
+const publication2 = {
+  type: 'HYPOTHESIS',
+  status: 'LIVE',
+  parentProblems: ['0'],
+  parentPublications: ['0'],
+  revision: 1,
+  title: 'Octopus - science publishing done right.',
+  summary: 'Octopus is a new publishing paradigm designed for researchers, by researchers.',
+  text: 'Designed to replace journals and papers, Octopus is free to use and gets your work out there much more quickly, to a wider audience and ensures you get maximum credit for the work you do, whether that’s coming up with hypotheses, designing protocols, collecting data, doing analyses or writing reviews.',
+  fundingStatement: '',
+  coiDeclaration: '',
+  createdByUser: '0000-0000-0000-0000',
+  dateCreated: '2019-09-01 00:00:00.000',
+  dateLastActivity: '2019-09-01 00:00:00.000',
+  keywords: [],
+  collaborators: [
+    {
+      userID: '0000-0000-0000-0000',
+      role: 'author',
+      status: 'CONFIRMED',
+      dateAdded: '2019-09-01 00:00:00.000',
+    },
+  ],
+};
+
+const publication3 = {
+  type: 'PROTOCOL',
+  status: 'LIVE',
+  parentProblems: ['0'],
+  parentPublications: ['0'],
+  revision: 1,
+  title: 'Testing Octopus',
+  summary: 'This publication outlines criteria by which Octopus can be considered successful.',
+  text: 'Lorem ipsum dolor sit.',
+  fundingStatement: '',
+  coiDeclaration: '',
+  createdByUser: '0000-0000-0000-0000',
+  dateCreated: '2019-09-01 00:00:00.000',
+  dateLastActivity: '2019-09-01 00:00:00.000',
+  keywords: [],
+  collaborators: [
+    {
+      userID: '0000-0000-0000-0000',
+      role: 'author',
+      status: 'CONFIRMED',
+      dateAdded: '2019-09-01 00:00:00.000',
+    },
+  ],
+};
+
+
 const publications = [
   publication1,
   publication2,
+  publication3,
 ];
 
 module.exports = publications;
