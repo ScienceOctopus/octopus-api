@@ -54,6 +54,9 @@ const publicationTypes = [
     plural: 'Reviews',
     ratingCriteria: ['Criterion 1', 'Criterion 2', 'Criterion 3'],
     linksTo: '*',
+    attributes: {
+      displayInPubChain: false,
+    },
   },
 ];
 
