@@ -3,7 +3,7 @@ const publicationTypes = [
     key: 'PROBLEM',
     title: 'Problem',
     plural: 'Problems',
-    ratingCriteria: ['Criterion 1', 'Criterion 2', 'Criterion 3'],
+    ratingCriteria: ['Well defined', 'Original', 'Important'],
     linksTo: '*',
   },
   {
@@ -25,6 +25,12 @@ const publicationTypes = [
     title: 'Data/Result',
     plural: 'Data/Results',
     ratingCriteria: ['Well annotated', 'Followed protocol', 'Size of dataset'],
+    additionalFields: [
+      {
+        type: 'string',
+        name: 'dataRepositoryUrls',
+      },
+    ],
     linksTo: ['PROTOCOL'],
   },
   {
@@ -52,8 +58,10 @@ const publicationTypes = [
     key: 'REVIEW',
     title: 'Review',
     plural: 'Reviews',
-    ratingCriteria: ['Criterion 1', 'Criterion 2', 'Criterion 3'],
-    linksTo: '*',
+    ratingCriteria: ['Overall rating'],
+    // reviews can't link to another review
+    linksTo: ['PROBLEM', 'HYPOTHESIS', 'PROTOCOL', 'RESULT', 'ANALYSIS', 'INTERPRETATION', 'APPLICATION'],
+    // reviews should be displayed next to a publication, not a separate column
     attributes: {
       displayInPubChain: false,
     },
