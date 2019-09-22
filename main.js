@@ -4,8 +4,9 @@ const bodyParser = require('body-parser');
 const express = require('express');
 
 const auth = require('./lib/auth');
+const config = require('./lib/config');
 
-const port = process.env.PORT || 4000;
+const port = config.appPort;
 
 const app = express();
 
@@ -45,6 +46,8 @@ app.get('/v1/publications/getByID/:id', Routes.v1.Publications.getPublicationByI
 app.get('/v1/publications/find', Routes.v1.Publications.findPublications);
 
 app.get('/v1/users/getByID/:id', Routes.v1.Users.getUserByID);
+app.get('/v1/users/getByORCiD/:orcid', Routes.v1.Users.getUserByORCiD);
+app.post('/v1/users/upsert', Routes.v1.Users.upsertUser);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
