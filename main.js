@@ -15,6 +15,7 @@ const app = express();
 const Routes = {
   home: require('./routes/home'),
   v1: {
+    Files: require('./routes/v1/files'),
     Publications: require('./routes/v1/publications'),
     PublicationTypes: require('./routes/v1/publicationTypes'),
     Users: require('./routes/v1/users'),
@@ -50,6 +51,11 @@ app.get('/v1/publications/find', Routes.v1.Publications.findPublications);
 app.get('/v1/users/getByID/:id', Routes.v1.Users.getUserByID);
 app.get('/v1/users/getByORCiD/:orcid', Routes.v1.Users.getUserByORCiD);
 app.post('/v1/users/upsert', Routes.v1.Users.upsertUser);
+
+app.get('/v1/files/get/:id/:filename?', Routes.v1.Files.getFile);
+app.get('/v1/files/getContent/:id/:filename?', Routes.v1.Files.getFileContent);
+app.get('/v1/files/upload', Routes.v1.Files.renderUploadForm);
+app.post('/v1/files/upload', Routes.v1.Files.uploadFile);
 
 app.use((err, req, res, next) => {
   debug('octopus:api:error')(err.stack);
