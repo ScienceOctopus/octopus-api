@@ -1,9 +1,9 @@
 const _ = require('lodash');
 const debug = require('debug');
-const fs = require('fs');
 
 const FilesModel = require('../../lib/mongo').files;
 const S3Lib = require('../../lib/s3');
+const FileLib = require('../../lib/file');
 
 function getFile(id, callback) {
   return FilesModel.getByID(id, callback);
@@ -27,19 +27,18 @@ function getFileContent(id, callback) {
   });
 }
 
-function extractContentFromLocalFile(filepath, callback) {
-  fs.readFile(filepath, (fileReadErr, fileContent) => {
-    if (fileReadErr) {
-      debug('octopus:api:error')(`Error uploading data: ${fileReadErr}`);
-      return callback(fileReadErr);
-    }
+function extractContentFromLocalFile(filepath, opts, callback) {
+  console.log(`extractContentFromLocalFile ${filepath}`);
 
-    return callback(null, fileContent.toString());
+  FileLib.convertToHtml(filepath, opts, (err, data) => {
+    console.log('err', err);
+    console.log('data', data);
+    callback(err, data);
   });
 }
 
 function insertFile(filedata, callback) {
-  extractContentFromLocalFile(filedata.path, (extractError, extractData) => {
+  extractContentFromLocalFile(filedata.path, filedata, (extractError, extractData) => {
     const newFileData = _.merge({}, filedata, { text: extractData });
 
     return S3Lib.upload(filedata.path, filedata.filename, (uploadErr, uploadData) => {

@@ -48,9 +48,9 @@ function getFileContent(req, res) {
   const fileID = String(req.params.id);
   const filename = req.params.filename;
 
-  return FilesModel.getFile(fileID, (fileErr, fileData) => {
-    if (fileErr) {
-      debug('octopus:api:error')(`Error in getFileContent(${fileID}): ${fileErr}`);
+  return FilesModel.getFile(fileID, (getFileErr, fileData) => {
+    if (getFileErr) {
+      debug('octopus:api:error')(`Error in getFileContent(${fileID}): ${getFileErr}`);
       return res.send('ERROR');
     }
 
@@ -59,9 +59,9 @@ function getFileContent(req, res) {
       return res.redirect(`/v1/files/getContent/${fileID}/${fileData.filename}`);
     }
 
-    return FilesModel.getFileContent(fileID, (fileErr, fileContent) => {
-      if (fileErr) {
-        debug('octopus:api:error')(`Error in getFileContent(${fileID}): ${fileErr}`);
+    return FilesModel.getFileContent(fileID, (fileContentErr, fileContent) => {
+      if (fileContentErr) {
+        debug('octopus:api:error')(`Error in getFileContent(${fileID}): ${fileContentErr}`);
         return res.send('ERROR');
       }
 
