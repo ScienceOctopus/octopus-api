@@ -69,6 +69,7 @@ function findPublications(req, res) {
     parentProblem: Number(req.query.parentProblem),
     createdByUser: Number(req.query.createdByUser),
     type: req.query.type,
+    status: req.query.status,
     phrase: req.query.phrase,
   };
 

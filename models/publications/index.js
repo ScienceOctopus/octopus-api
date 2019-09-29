@@ -32,6 +32,11 @@ function findPublications(query, callback) {
     mongoQuery.$and.push(typeQuery);
   }
 
+  if (query.status) {
+    const typeQuery = { status: String(query.status).toUpperCase() };
+    mongoQuery.$and.push(typeQuery);
+  }
+
   if (!mongoQuery.$and.length) {
     mongoQuery = {};
   }
