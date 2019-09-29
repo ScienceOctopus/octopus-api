@@ -26,9 +26,6 @@ const Routes = {
 app.use('/docs', express.static('docs'));
 app.use('/public', express.static('public'));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
 app.get('/', Routes.home);
 
 app.use('/v1', (req, res, next) => {
@@ -41,6 +38,12 @@ app.use('/v1', (req, res, next) => {
     return next();
   });
 });
+
+// register file handler first to prevent bodyParser from conflicting with formidable
+app.post('/v1/files/upload', Routes.v1.Files.uploadFile);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/v1/publicationTypes', Routes.v1.PublicationTypes.getPublicationTypes);
 
@@ -55,7 +58,6 @@ app.post('/v1/users/upsert', Routes.v1.Users.upsertUser);
 app.get('/v1/files/get/:id/:filename?', Routes.v1.Files.getFile);
 app.get('/v1/files/getContent/:id/:filename?', Routes.v1.Files.getFileContent);
 app.get('/v1/files/upload', Routes.v1.Files.renderUploadForm);
-app.post('/v1/files/upload', Routes.v1.Files.uploadFile);
 
 app.use((err, req, res, next) => {
   debug('octopus:api:error')(err.stack);
