@@ -4,6 +4,10 @@ function createPublication(data, callback) {
   return PublicationsModel.insertOne(data, callback);
 }
 
+function updatePublication(data, callback) {
+  return PublicationsModel.updateOne({ _id: data._id }, data, callback);
+}
+
 function getPublicationByID(id, callback) {
   return PublicationsModel.getByID(id, callback);
 }
@@ -46,6 +50,7 @@ function findPublications(query, callback) {
 
 module.exports = {
   createPublication,
+  updatePublication,
   getPublicationByID,
   findPublications,
 };

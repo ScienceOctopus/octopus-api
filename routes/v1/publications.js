@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const debug = require('debug');
 const PublicationsModel = require('../../models/publications');
+const ObjectID = require('../../lib/mongo').ObjectID;
 
 /**
  * @api {post} /v1/publications/createPublication Create a Publication
@@ -20,6 +21,32 @@ function createPublication(req, res) {
     if (publicationErr) {
       debug('octopus:api:error')(`Error in createPublication: ${publicationErr}`);
       debug('octopus:api:error')(`Error in createPublication data: ${publicationData}`);
+      return res.send('ERROR');
+    }
+
+    return res.json(publicationResult);
+  });
+}
+
+/**
+ * @api {post} /v1/publications/updatePublication Update a Publication
+ * @apiName updatePublication
+ * @apiGroup Publications
+ * @apiVersion 1.0.0
+ * @apiSampleRequest /v1/publications/updatePublication
+ *
+ * @apiParam {Object} data Publication's data.
+ *
+ * @apiUse PublicationObject
+ */
+function updatePublication(req, res) {
+  const publicationData = _.merge({}, req.body);
+  publicationData._id = ObjectID(publicationData._id);
+
+  return PublicationsModel.updatePublication(publicationData, (publicationErr, publicationResult) => {
+    if (publicationErr) {
+      debug('octopus:api:error')(`Error in updatePublication: ${publicationErr}`);
+      debug('octopus:api:error')(`Error in updatePublication data: ${publicationData}`);
       return res.send('ERROR');
     }
 
@@ -86,6 +113,7 @@ function findPublications(req, res) {
 
 module.exports = {
   createPublication,
+  updatePublication,
   getPublicationByID,
   findPublications,
 };

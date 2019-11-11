@@ -50,6 +50,7 @@ app.get('/v1/publicationTypes', Routes.v1.PublicationTypes.getPublicationTypes);
 app.post('/v1/publications/create', Routes.v1.Publications.createPublication);
 app.get('/v1/publications/getByID/:id', Routes.v1.Publications.getPublicationByID);
 app.get('/v1/publications/find', Routes.v1.Publications.findPublications);
+app.post('/v1/publications/update', Routes.v1.Publications.updatePublication);
 
 app.get('/v1/users/getByID/:id', Routes.v1.Users.getUserByID);
 app.get('/v1/users/getByORCiD/:orcid', Routes.v1.Users.getUserByORCiD);
