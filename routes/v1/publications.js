@@ -94,7 +94,7 @@ function getPublicationByID(req, res) {
 function findPublications(req, res) {
   const query = {
     parentProblem: Number(req.query.parentProblem),
-    createdByUser: Number(req.query.createdByUser),
+    createdByUser: req.query.createdByUser,
     type: req.query.type,
     status: req.query.status,
     phrase: req.query.phrase,
