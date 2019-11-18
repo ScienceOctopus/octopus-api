@@ -41,6 +41,11 @@ function findPublications(query, callback) {
     mongoQuery.$and.push(typeQuery);
   }
 
+  if (query.createdByUser) {
+    const typeQuery = { createdByUser: query.createdByUser };
+    mongoQuery.$and.push(typeQuery);
+  }
+
   if (!mongoQuery.$and.length) {
     mongoQuery = {};
   }
