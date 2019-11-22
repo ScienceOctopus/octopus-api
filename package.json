@@ -25,6 +25,7 @@
     "mammoth": "^1.4.9",
     "markdown-it": "^10.0.0",
     "mongodb": "^3.3.4",
+    "pdfkit": "^0.10.0",
     "pdftotextjs": "^0.5.1",
     "read-chunk": "^3.2.0"
   },

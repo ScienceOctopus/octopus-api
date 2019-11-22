@@ -2,7 +2,10 @@ const _ = require('lodash');
 const debug = require('debug');
 const PublicationsModel = require('../../models/publications');
 const ObjectID = require('../../lib/mongo').ObjectID;
-
+const PDFDocument = require('pdfkit');
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
 /**
  * @api {post} /v1/publications/createPublication Create a Publication
  * @apiName createPublication
@@ -111,9 +114,66 @@ function findPublications(req, res) {
   });
 }
 
+function downloadPublication(req, res) {
+  const { id: publicationID } = req.params;
+
+  const publicationData = PublicationsModel.getPublicationByID(publicationID, (publicationErr, publicationData) => {
+    if (publicationErr) {
+      debug('octopus:api:error')(`Error in getPublicationByID for ${publicationID}: ${publicationErr}`);
+      return res.send('ERROR');
+    }
+
+    const {
+      title,
+      revision,
+      dateCreated,
+      summary,
+      text,
+      createdByUser,
+      collaborators
+    } = publicationData;
+
+    const doc = new PDFDocument();
+    let filename = title;
+    // Stripping special characters
+    filename = encodeURIComponent(filename) + '.pdf';
+
+    // Setting response to 'attachment' (download).
+    // If you use 'inline' here it will automatically open the PDF
+    res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"');
+    res.setHeader('Content-type', 'application/pdf');
+    doc.y = 300;
+    doc.text(summary, 50, 50);
+    // doc.pipe(res);
+console.log('filename',filename);
+    doc.pipe(fs.createWriteStream(`/tmp/${filename}`))
+    .on('finish', function () {
+        console.log('PDF closed');
+    });
+    doc.pipe(res);
+    doc.end();
+
+    http.createServer(function(request, response) {
+      var filePath = path.join('/tmp/', filename);
+      var stat = fs.statSync(filePath);
+
+      response.writeHead(200, {
+          'Content-Type': 'audio/mpeg',
+          'Content-Length': stat.size
+      });
+
+      var readStream = fs.createReadStream(filePath);
+      // We replaced all the event handlers with a simple call to readStream.pipe()
+      readStream.pipe(response);
+  })
+  .listen(2000);
+  });
+}
+
 module.exports = {
   createPublication,
   updatePublication,
   getPublicationByID,
   findPublications,
+  downloadPublication,
 };
