@@ -134,39 +134,22 @@ function downloadPublication(req, res) {
     } = publicationData;
 
     const doc = new PDFDocument();
-    let filename = title;
-    // Stripping special characters
-    filename = encodeURIComponent(filename) + '.pdf';
+    const filename = `${encodeURIComponent(title)}.pdf`;
+    const file = fs.createWriteStream(filename);
 
-    // Setting response to 'attachment' (download).
-    // If you use 'inline' here it will automatically open the PDF
-    res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"');
-    res.setHeader('Content-type', 'application/pdf');
-    doc.y = 300;
+    doc.pipe(file);
+
     doc.text(summary, 50, 50);
-    // doc.pipe(res);
-console.log('filename',filename);
-    doc.pipe(fs.createWriteStream(`/tmp/${filename}`))
-    .on('finish', function () {
-        console.log('PDF closed');
-    });
-    doc.pipe(res);
+
     doc.end();
 
-    http.createServer(function(request, response) {
-      var filePath = path.join('/tmp/', filename);
-      var stat = fs.statSync(filePath);
-
-      response.writeHead(200, {
-          'Content-Type': 'audio/mpeg',
-          'Content-Length': stat.size
-      });
-
-      var readStream = fs.createReadStream(filePath);
-      // We replaced all the event handlers with a simple call to readStream.pipe()
-      readStream.pipe(response);
-  })
-  .listen(2000);
+    let buffers = [];
+    doc.on('data', buffers.push.bind(buffers));
+    doc.on('end', () => {
+        const buffer = Buffer.concat(buffers);
+        res.end(buffer, 'binary');
+        fs.unlinkSync(filename);
+    });
   });
 }
 
