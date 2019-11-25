@@ -27,7 +27,8 @@
     "mongodb": "^3.3.4",
     "pdfkit": "^0.10.0",
     "pdftotextjs": "^0.5.1",
-    "read-chunk": "^3.2.0"
+    "read-chunk": "^3.2.0",
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "apidoc": "^0.18.0",
