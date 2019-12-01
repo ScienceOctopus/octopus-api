@@ -1,8 +1,7 @@
 const publication1 = {
   type: 'PROBLEM',
   status: 'LIVE',
-  parentProblems: ['0'],
-  parentPublications: ['0'],
+  linkedPublications: ['0'],
   revision: 1,
   title: 'Democratisation of science publishing',
   summary: 'Science publishing is broken. Octopus aims to fix it.',
@@ -13,7 +12,7 @@ const publication1 = {
   dateCreated: '2019-09-01 00:00:00.000',
   dateLastActivity: '2019-09-01 00:00:00.000',
   keywords: [],
-  collaborators: [
+  authors: [
     {
       userID: '0000-0000-0000-0000',
       role: 'author',
@@ -26,8 +25,7 @@ const publication1 = {
 const publication2 = {
   type: 'HYPOTHESIS',
   status: 'LIVE',
-  parentProblems: ['0'],
-  parentPublications: ['0'],
+  linkedPublications: ['0'],
   revision: 1,
   title: 'Octopus - science publishing done right.',
   summary: 'Octopus is a new publishing paradigm designed for researchers, by researchers.',
@@ -38,7 +36,7 @@ const publication2 = {
   dateCreated: '2019-09-01 00:00:00.000',
   dateLastActivity: '2019-09-01 00:00:00.000',
   keywords: [],
-  collaborators: [
+  authors: [
     {
       userID: '0000-0000-0000-0000',
       role: 'author',
@@ -51,8 +49,7 @@ const publication2 = {
 const publication3 = {
   type: 'PROTOCOL',
   status: 'LIVE',
-  parentProblems: ['0'],
-  parentPublications: ['0'],
+  linkedPublications: ['0'],
   revision: 1,
   title: 'Testing Octopus',
   summary: 'This publication outlines criteria by which Octopus can be considered successful.',
@@ -63,7 +60,7 @@ const publication3 = {
   dateCreated: '2019-09-01 00:00:00.000',
   dateLastActivity: '2019-09-01 00:00:00.000',
   keywords: [],
-  collaborators: [
+  authors: [
     {
       userID: '0000-0000-0000-0000',
       role: 'author',

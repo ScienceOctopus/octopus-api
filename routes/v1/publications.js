@@ -41,6 +41,16 @@ const getUserFullName = (orcidId) => new Promise((resolve) => {
 function createPublication(req, res) {
   const publicationData = _.merge({}, req.body);
 
+  console.log(publicationData);
+
+  if (publicationData.authors) {
+    publicationData.authors = publicationData.authors.split(',');
+  }
+
+  if (publicationData.linkedPublications) {
+    publicationData.linkedPublications = publicationData.linkedPublications.split(',');
+  }
+
   return PublicationsModel.createPublication(publicationData, (publicationErr, publicationResult) => {
     if (publicationErr) {
       debug('octopus:api:error')(`Error in createPublication: ${publicationErr}`);
@@ -166,15 +176,15 @@ function downloadPublication(req, res) {
       summary,
       text,
       createdByUser,
-      collaborators,
+      authors,
     } = publicationData;
 
-    const collaboratorsData = [];
+    const authorsListData = [];
     const authorData = await getUserFullName(createdByUser);
 
-    await collaborators.forEach(async (collaborator) => {
-      const data = await getUserFullName(collaborator.orcidID);
-      collaboratorsData.push(data);
+    await authors.forEach(async (author) => {
+      const data = await getUserFullName(author.orcidID);
+      authorsListData.push(data);
     });
 
     const { baseurl: baseUrl } = req.headers;
@@ -220,20 +230,20 @@ function downloadPublication(req, res) {
         link: authorUrl,
       })
       .fillColor('grey')
-      .text('Collaborators: ', {
+      .text('Authors: ', {
         continued: true,
       });
 
-    collaboratorsData.forEach((collaborator) => {
-      const userUrl = `${baseUrl}/users/view/${collaborator.orcidId}`;
+      authorsListData.forEach((author) => {
+        const userUrl = `${baseUrl}/users/view/${author.orcidId}`;
 
-      doc
-        .fillColor('#337ab7')
-        .text(collaborator.fullName, {
-          continued: false,
-          link: userUrl,
-        });
-    });
+        doc
+          .fillColor('#337ab7')
+          .text(author.fullName, {
+            continued: false,
+            link: userUrl,
+          });
+      });
 
     doc.moveDown();
     doc.moveDown();
