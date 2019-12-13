@@ -212,7 +212,7 @@ function downloadPublication(req, res) {
       .text(`Date created: ${splittedDate}`)
       .text(`Version number: ${revision}`)
       .text('Authors: ', {
-        continued: authorData.fullName ? true : false,
+        continued: !!authorData.fullName,
       })
       .fillColor('#337ab7')
       .text(authorData.fullName, {
@@ -278,7 +278,8 @@ function downloadPublication(req, res) {
 
     const buffers = [];
     doc.on('data', buffers.push.bind(buffers));
-    doc.on('end', () => {
+
+    return doc.on('end', () => {
       const buffer = Buffer.concat(buffers);
       res.end(buffer, 'binary');
       fs.unlinkSync(filePath);
