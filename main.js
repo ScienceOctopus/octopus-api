@@ -17,7 +17,7 @@ const Routes = {
   v1: {
     Files: require('./routes/v1/files'),
     Publications: require('./routes/v1/publications'),
-    Reversions: require('./routes/v1/reversions'),
+    Archive: require('./routes/v1/archive'),
     PublicationTypes: require('./routes/v1/publicationTypes'),
     Users: require('./routes/v1/users'),
   },
@@ -49,9 +49,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/v1/publicationTypes', Routes.v1.PublicationTypes.getPublicationTypes);
 
 app.post('/v1/publications/create', Routes.v1.Publications.createPublication);
-app.post('/v1/reversions/create', Routes.v1.Reversions.createReversion);
+app.post('/v1/archive/create', Routes.v1.Archive.createArchive);
 app.get('/v1/publications/getByID/:id', Routes.v1.Publications.getPublicationByID);
-app.get('/v1/reversions/getByID/:id/:revision', Routes.v1.Reversions.getReversion);
+app.get('/v1/archive/getByID/:id/:revision', Routes.v1.Archive.getArchive);
 app.get('/v1/publications/find', Routes.v1.Publications.findPublications);
 app.post('/v1/publications/update', Routes.v1.Publications.updatePublication);
 app.get('/v1/publications/download/:id', Routes.v1.Publications.downloadPublication);
