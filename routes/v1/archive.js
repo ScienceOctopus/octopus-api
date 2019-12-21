@@ -28,10 +28,6 @@ function getArchive(req, res) {
       return res.send('ERROR');
     }
 
-    if (archiveResult.length) {
-      return res.json(_.first(archiveResult));
-    }
-
     return res.json(archiveResult);
   });
 }

@@ -6,7 +6,12 @@ function createArchive(data, callback) {
 
 function getArchive(publicationID, _revision, callback) {
   const revision = parseInt(_revision, 10);
-  return ArchiveModel.find({ publicationID, revision }, callback);
+
+  if (!Number.isNaN(revision)) {
+    return ArchiveModel.find({ publicationID, revision }, callback);
+  }
+
+  return ArchiveModel.find({ publicationID }, callback);
 }
 
 module.exports = {
