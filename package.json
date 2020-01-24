@@ -21,6 +21,7 @@
     "express": "^4.17.1",
     "file-type": "^12.4.0",
     "formidable": "^1.2.1",
+    "html-minifier": "^4.0.0",
     "lodash": "^4.17.15",
     "mammoth": "^1.4.9",
     "markdown-it": "^10.0.0",

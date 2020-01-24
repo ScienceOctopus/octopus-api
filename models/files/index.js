@@ -31,8 +31,8 @@ function extractContentFromLocalFile(filepath, opts, callback) {
   console.log(`extractContentFromLocalFile ${filepath}`);
 
   FileLib.convertToHtml(filepath, opts, (err, data) => {
-    console.log('err', err);
-    console.log('data', data);
+    // console.log('err', err);
+    // console.log('data', data);
     callback(err, data);
   });
 }
