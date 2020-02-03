@@ -43,8 +43,8 @@ app.use('/v1', (req, res, next) => {
 // register file handler first to prevent bodyParser from conflicting with formidable
 app.post('/v1/files/upload', Routes.v1.Files.uploadFile);
 
-app.use(bodyParser.json({limit: '10mb', extended: true}));
-app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
+app.use(bodyParser.json({ limit: '10mb', extended: true }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 app.get('/v1/publicationTypes', Routes.v1.PublicationTypes.getPublicationTypes);
 
