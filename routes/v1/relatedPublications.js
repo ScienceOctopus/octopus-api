@@ -29,7 +29,7 @@ function createRelatedPublication(req, res) {
       }
 
       return res.json(relatedPublicationResult);
-    }
+    },
   );
 }
 
@@ -59,7 +59,7 @@ function updateRelatedPublication(req, res) {
       }
 
       return res.json(relatedPublicationResult);
-    }
+    },
   );
 }
 
@@ -82,7 +82,7 @@ function findRelatedPublications(req, res) {
 
   const query = {
     publicationID: req.query.publicationID,
-    relatedTo: req.query.relatedTo
+    relatedTo: req.query.relatedTo,
   };
 
   return RelatedPublicationsModel.findRelatedPublications(
@@ -94,12 +94,12 @@ function findRelatedPublications(req, res) {
       }
 
       return res.json(relatedPublicationData);
-    }
+    },
   );
 }
 
 module.exports = {
   createRelatedPublication,
   updateRelatedPublication,
-  findRelatedPublications
+  findRelatedPublications,
 };

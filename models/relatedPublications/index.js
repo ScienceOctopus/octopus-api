@@ -9,14 +9,14 @@ function updateRelatedPublication(data, callback) {
 }
 
 function findRelatedPublications(query, callback) {
-  let mongoQuery =  { $and: [] };
+  let mongoQuery = { $and: [] };
 
-  if ( query.publicationID ) {
+  if (query.publicationID) {
     const publicationIDQuery = { publicationID: query.publicationID };
     mongoQuery.$and.push(publicationIDQuery);
   }
 
-  if ( query.relatedTo ) {
+  if (query.relatedTo) {
     const relatedToQuery = { relatedTo: query.relatedTo };
     mongoQuery.$and.push(relatedToQuery);
   }
