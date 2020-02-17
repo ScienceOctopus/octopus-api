@@ -19,6 +19,15 @@
  */
 
 /**
+ * @apiDefine RelatedPublicationObject
+ * @apiSuccess {Integer} id Unique identifier
+ * @apiSuccess {Integer} publicationID Unique identifier for publication
+ * @apiSuccess {Integer} relatedTo publication ID of the publication to which this Publication unit belongs
+ * @apiSuccess {Integer} createdByUser ID of User who created this Related Publication unit
+ * @apiSuccess {Array} ratings of Users who rated this Related Publication unit
+ */
+
+/**
  * @apiDefine UserObject
  *
  * @apiSuccess {Integer} id Unique identifier

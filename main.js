@@ -17,6 +17,7 @@ const Routes = {
   v1: {
     Files: require('./routes/v1/files'),
     Publications: require('./routes/v1/publications'),
+    RelatedPublications: require('./routes/v1/relatedPublications'),
     Archive: require('./routes/v1/archive'),
     PublicationTypes: require('./routes/v1/publicationTypes'),
     Users: require('./routes/v1/users'),
@@ -55,6 +56,10 @@ app.get('/v1/archive/getByID/:id/:revision', Routes.v1.Archive.getArchive);
 app.get('/v1/publications/find', Routes.v1.Publications.findPublications);
 app.post('/v1/publications/update', Routes.v1.Publications.updatePublication);
 app.get('/v1/publications/download/:id', Routes.v1.Publications.downloadPublication);
+
+app.post('/v1/relatedPublications/create', Routes.v1.RelatedPublications.createRelatedPublication);
+app.get('/v1/relatedPublications/find', Routes.v1.RelatedPublications.findRelatedPublications);
+app.post('/v1/relatedPublications/update', Routes.v1.RelatedPublications.updateRelatedPublication);
 
 app.get('/v1/users/getByID/:id', Routes.v1.Users.getUserByID);
 app.get('/v1/users/getByORCiD/:orcid', Routes.v1.Users.getUserByORCiD);
