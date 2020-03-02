@@ -9,8 +9,8 @@ const redFlaggedPublications = [
       {
         userID: '',
         text: '',
-        dateCreated: ''
-      }
+        dateCreated: '',
+      },
     ], // Resolution comments
     createdByUser: '', // UserID of the user that red flagged the publication
     dateCreated: '', // When the publication was red flagged

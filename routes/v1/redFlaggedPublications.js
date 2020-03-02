@@ -29,7 +29,7 @@ function addRedFlaggedPublication(req, res) {
       }
 
       return res.json(redFlagPublicationResult);
-    }
+    },
   );
 }
 
@@ -59,7 +59,7 @@ function updateResolution(req, res) {
       }
 
       return res.json(resolutionResult);
-    }
+    },
   );
 }
 
@@ -87,7 +87,7 @@ function getResolutionByID(req, res) {
       }
 
       return res.json(resolutionData);
-    }
+    },
   );
 }
 
@@ -105,14 +105,14 @@ function getResolutionByID(req, res) {
 
 function findResolutions(req, res) {
   const query = {
-    publicationID: req.query.publicationID
-  }
+    publicationID: req.query.publicationID,
+  };
 
   return RedFlaggedPublications.findResolutions(
     query,
     (resolutionsErr, resolutionsData) => {
       if (resolutionsErr) {
-        debug('octopus:api:error')(`Error in findResolutions for ${publicationID}: ${resolutionsErr}`);
+        debug('octopus:api:error')(`Error in findResolutions for ${query.publicationID}: ${resolutionsErr}`);
         return res.send('ERROR');
       }
 
@@ -125,5 +125,5 @@ module.exports = {
   addRedFlaggedPublication,
   updateResolution,
   getResolutionByID,
-  findResolutions
+  findResolutions,
 };
