@@ -18,6 +18,7 @@ const Routes = {
     Files: require('./routes/v1/files'),
     Publications: require('./routes/v1/publications'),
     RelatedPublications: require('./routes/v1/relatedPublications'),
+    RedFlaggedPublications: require('./routes/v1/redFlaggedPublications'),
     Archive: require('./routes/v1/archive'),
     PublicationTypes: require('./routes/v1/publicationTypes'),
     Users: require('./routes/v1/users'),
@@ -60,6 +61,11 @@ app.get('/v1/publications/download/:id', Routes.v1.Publications.downloadPublicat
 app.post('/v1/relatedPublications/create', Routes.v1.RelatedPublications.createRelatedPublication);
 app.get('/v1/relatedPublications/find', Routes.v1.RelatedPublications.findRelatedPublications);
 app.post('/v1/relatedPublications/update', Routes.v1.RelatedPublications.updateRelatedPublication);
+
+app.post('/v1/redFlagPublication/add', Routes.v1.RedFlaggedPublications.addRedFlaggedPublication);
+app.get('/v1/redFlagPublication/getByID/:id', Routes.v1.RedFlaggedPublications.getResolutionByID);
+app.post('/v1/redFlagPublication/update', Routes.v1.RedFlaggedPublications.updateResolution);
+app.get('/v1/redFlagPublication/find', Routes.v1.RedFlaggedPublications.findResolutions);
 
 app.get('/v1/users/getByID/:id', Routes.v1.Users.getUserByID);
 app.get('/v1/users/getByORCiD/:orcid', Routes.v1.Users.getUserByORCiD);
