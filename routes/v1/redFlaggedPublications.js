@@ -36,13 +36,13 @@ function addRedFlaggedPublication(req, res) {
 /**
  * @api {post} /v1/redFlagPublication/update Update a Resolution
  * @apiName updateResolution
- * @apiGroup Publications
+ * @apiGroup RedFlaggedPublications
  * @apiVersion 1.0.0
  * @apiSampleRequest /v1/redFlagPublication/upadte
  *
  * @apiParam {Object} data Resolution's data.
  *
- * @apiUse ResolutionObject
+ * @apiUse RedFlaggedPublicationObject
  */
 
 function updateResolution(req, res) {
@@ -66,13 +66,13 @@ function updateResolution(req, res) {
 /**
  * @api {get} /v1/redFlagPublication/getByID/:id Get Resolution by ID
  * @apiName getResolutionByID
- * @apiGroup Resolutions
+ * @apiGroup RedFlaggedPublications
  * @apiVersion 1.0.0
  * @apiSampleRequest /v1/redFlagPublication/getByID/:id
  *
  * @apiParam {Number} id Resolution's unique ID.
  *
- * @apiUse ResolutionObject
+ * @apiUse RedFlaggedPublicationObject
  */
 
 function getResolutionByID(req, res) {
@@ -94,13 +94,15 @@ function getResolutionByID(req, res) {
 /**
  * @api {get} /v1/redFlagPublication/find Find Resolution based on specified criteria
  * @apiName findResolutions
- * @apiGroup Resolutions
+ * @apiGroup RedFlaggedPublications
  * @apiVersion 1.0.0
  * @apiSampleRequest /v1/redFlagPublication/find
  *
  * @apiParam {Integer} publicationID ID of the publication it is related to
  *
+ * @apiUse RedFlaggedPublicationObject
  * @apiSuccess {Array} results Array containing Resolutions matching the specified criteria
+ *
  */
 
 function findResolutions(req, res) {

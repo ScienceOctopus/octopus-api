@@ -12,8 +12,8 @@ function getUserByORCiD(orcid, callback) {
 }
 
 function upsertUser(where, data, callback) {
-  return UsersModel.updateOne(where, data, (err, data) => {
-    return callback(null, data.result.ok === 1);
+  return UsersModel.updateOne(where, data, (err, userData) => {
+    return callback(null, userData.result.ok === 1);
   });
 }
 

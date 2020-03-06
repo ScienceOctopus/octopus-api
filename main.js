@@ -75,7 +75,7 @@ app.get('/v1/files/get/:id/:filename?', Routes.v1.Files.getFile);
 app.get('/v1/files/getContent/:id/:filename?', Routes.v1.Files.getFileContent);
 app.get('/v1/files/upload', Routes.v1.Files.renderUploadForm);
 
-app.use((err, req, res, next) => {
+app.use((err, _req, res, _next) => {
   debug('octopus:api:error')(err.stack);
   return res.sendStatus(500);
 });
