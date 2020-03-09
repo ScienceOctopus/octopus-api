@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "dev": "nodemon -e js main.js",
     "start": "node main.js",
     "lint": "eslint .",
     "migrate": "node migrations/insertSampleData.js",
@@ -26,6 +27,7 @@
     "mammoth": "^1.4.9",
     "markdown-it": "^10.0.0",
     "mongodb": "^3.3.4",
+    "nodemon": "^2.0.2",
     "pdf-html-extract": "^1.1.0",
     "pdfkit": "^0.10.0",
     "pdftohtmljs": "^0.5.3",

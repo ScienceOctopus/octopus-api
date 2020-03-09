@@ -28,6 +28,18 @@
  */
 
 /**
+ * @apiDefine RedFlaggedPublicationObject
+ * @apiSuccess {Integer} id Unique identifier
+ * @apiSuccess {Integer} publicationID Unique identifier for publication
+ * @apiSuccess {String} reason that the publication was red flagged
+ * @apiSuccess {String} description Description of the Resolution
+ * @apiSuccess {String} status Indicates status of the resolution (OPEN / RESOLVED)
+ * @apiSuccess {Array} comments of Users who commented this Resolution unit
+ * @apiSuccess {Integer} createdByUser ID of User who created this Red Flagged Publication unit
+ * @apiSuccess {String} dateCreated Date of Red Flag Publication unit creation
+ */
+
+/**
  * @apiDefine UserObject
  *
  * @apiSuccess {Integer} id Unique identifier
