@@ -40,6 +40,9 @@
     "no-undef": "error",
     "no-unused-vars": "warn",
     "no-underscore-dangle":  ["error", { "allow": ["_id"] }],
-    "no-async-promise-executor": "off"
+    "no-async-promise-executor": "off",
+    "no-octal": "off",
+    "no-plusplus": "off",
+    "no-await-in-loop": "off"
   }
 }
