@@ -138,5 +138,5 @@ module.exports = {
   getUserByORCiD,
   upsertUser,
   insertUser,
-  insertManyUsers
+  insertManyUsers,
 };
