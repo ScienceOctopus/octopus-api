@@ -80,8 +80,63 @@ function upsertUser(req, res) {
   });
 }
 
+/**
+ * @api {post} /v1/users/insert Insert a User
+ * @apiName insertUser
+ * @apiGroup User
+ * @apiVersion 1.0.0
+ * @apiSampleRequest /v1/users/insert
+ *
+ * @apiParam {object} data User's data
+ *
+ * @apiUse UserObject
+ */
+
+function insertUser(req, res) {
+  const userData = req.body;
+
+  return UsersModel.insertUser((userData), (userErr, insertUserResult) => {
+    if (userErr) {
+      debug('octopus:api:error')(`Error in insertUser: ${userErr}`);
+      debug('octopus:api:error')(`Error in insertUser data: ${userData}`);
+      return res.send('ERROR');
+    }
+
+    return res.json(insertUserResult);
+  });
+}
+
+/**
+ * @api {post} /v1/users/insertMany Insert a Multiple Users
+ * @apiName insertManyUsers
+ * @apiGroup User
+ * @apiVersion 1.0.0
+ * @apiSampleRequest /v1/users/insertMany
+ *
+ * @apiParam {object} data User's data
+ *
+ * @apiUse UserObject
+ */
+
+function insertManyUsers(req, res) {
+  const userData = req.body;
+
+  return UsersModel.insertManyUsers((userData), (userErr, insertManyUsersResult) => {
+    if (userErr) {
+      debug('octopus:api:error')(`Error in insertManyUsers: ${userErr}`);
+      debug('octopus:api:error')(`Error in insertManyUsers data: ${userData}`);
+      return res.send('ERROR');
+    }
+
+    return res.json(insertManyUsersResult);
+  });
+}
+
+
 module.exports = {
   getUserByID,
   getUserByORCiD,
   upsertUser,
+  insertUser,
+  insertManyUsers,
 };

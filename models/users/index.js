@@ -17,8 +17,18 @@ function upsertUser(where, data, callback) {
   });
 }
 
+function insertUser(data, callback) {
+  return UsersModel.insertOne(data, callback);
+}
+
+function insertManyUsers(data, callback) {
+  return UsersModel.insertMany(data, callback);
+}
+
 module.exports = {
   getUserByID,
   getUserByORCiD,
   upsertUser,
+  insertUser,
+  insertManyUsers,
 };

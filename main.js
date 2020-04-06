@@ -70,6 +70,8 @@ app.get('/v1/redFlagPublication/find', Routes.v1.RedFlaggedPublications.findReso
 app.get('/v1/users/getByID/:id', Routes.v1.Users.getUserByID);
 app.get('/v1/users/getByORCiD/:orcid', Routes.v1.Users.getUserByORCiD);
 app.post('/v1/users/upsert', Routes.v1.Users.upsertUser);
+app.post('/v1/users/insert', Routes.v1.Users.insertUser);
+app.post('/v1/users/insertMany', Routes.v1.Users.insertManyUsers);
 
 app.get('/v1/files/get/:id/:filename?', Routes.v1.Files.getFile);
 app.get('/v1/files/getContent/:id/:filename?', Routes.v1.Files.getFileContent);
