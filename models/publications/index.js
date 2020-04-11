@@ -20,7 +20,6 @@ function findPublications(query, callback) {
     const phraseQuery = {
       $or: [
         { title: { $regex: phraseRegExp } },
-        { summary: { $regex: phraseRegExp } },
       ],
     };
     mongoQuery.$and.push(phraseQuery);
