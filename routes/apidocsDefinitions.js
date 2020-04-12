@@ -5,7 +5,6 @@
  * @apiSuccess {Integer} problem ID of the Problem to which this Publication unit belongs
  * @apiSuccess {Integer} stage ID of that Problem's stage (hypothesis, etc)
  * @apiSuccess {String} title Title of the Publication unit
- * @apiSuccess {String} summary Summary of the Publication unit
  * @apiSuccess {String} text Full text of the Publication unit
  * @apiSuccess {Array} files Files uploaded by the authors at all stages of the process
  * @apiSuccess {String} status Indicates status of the publication (DRAFT / LIVE / ARCHIVED / FINAL / PUBLISHED)

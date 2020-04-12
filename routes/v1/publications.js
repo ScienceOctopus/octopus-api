@@ -163,7 +163,6 @@ function downloadPublication(req, res) {
       title,
       revision,
       dateCreated,
-      summary,
       text,
       createdByUser,
       collaborators,
@@ -244,20 +243,6 @@ function downloadPublication(req, res) {
       .text(title, {
         align: 'center',
         indent: 30,
-      });
-
-    doc.moveDown();
-
-    doc
-      .fontSize(16)
-      .fillColor('#9955de')
-      .text('Summary', 50)
-      .fontSize(12)
-      .fillColor('black')
-      .text(summary, {
-        align: 'left',
-        indent: 30,
-        ellipsis: true,
       });
 
     doc.moveDown();
