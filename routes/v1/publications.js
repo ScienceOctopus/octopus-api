@@ -1,5 +1,6 @@
 const PDFDocument = require('pdfkit');
 const debug = require('debug');
+const PDFKitHTML = require("@shipper/pdfkit-html-simple");
 const _ = require('lodash');
 const fs = require('fs');
 
@@ -181,11 +182,6 @@ function downloadPublication(req, res) {
     const authorUrl = `${baseUrl}/users/view/${authorData.orcidId}`;
 
     const doc = new PDFDocument({ compress: false });
-    const fileName = `${encodeURIComponent(title)}.pdf'`;
-    const filePath = `/tmp/${fileName}`;
-    const file = fs.createWriteStream(filePath);
-
-    doc.pipe(file);
 
     // transform "2019-11-13 00:00:00" to "2019-11-13"
     const splittedDate = dateCreated.split(' ')[0];
@@ -251,24 +247,26 @@ function downloadPublication(req, res) {
       .fontSize(16)
       .fillColor('#9955de')
       .text('Full Text')
-      .fontSize(12)
-      .fillColor('black')
-      .text(text, {
-        align: 'left',
-        indent: 30,
-        ellipsis: true,
-      });
 
+    doc.moveDown();
+
+    // Add content
+    doc
+    .fontSize(12)
+    .fillColor('black')
+    await PDFKitHTML
+      .parse(text)
+      .then(transformations => transformations.reduce(
+        (promise, transformation) => promise.then(transformation),
+        Promise.resolve(doc)
+      ));
+
+    // Finished
     doc.end();
 
     const buffers = [];
     doc.on('data', buffers.push.bind(buffers));
-
-    return doc.on('end', () => {
-      const buffer = Buffer.concat(buffers);
-      res.end(buffer, 'binary');
-      fs.unlinkSync(filePath);
-    });
+    doc.on('end', () => res.end(Buffer.concat(buffers), 'binary'));
   });
 }
 
