@@ -254,12 +254,13 @@ function downloadPublication(req, res) {
     doc
     .fontSize(12)
     .fillColor('black')
-    await PDFKitHTML
-      .parse(text)
-      .then(transformations => transformations.reduce(
-        (promise, transformation) => promise.then(transformation),
+
+    await PDFKitHTML.parse(text).then(transformations =>
+      transformations.reduce((promise, transformation) =>
+        promise.then(transformation).then(doc => doc.moveDown()),
         Promise.resolve(doc)
-      ));
+      )
+    );
 
     // Finished
     doc.end();
