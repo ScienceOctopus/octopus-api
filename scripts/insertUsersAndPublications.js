@@ -32,7 +32,7 @@ MongoClient.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true 
     // Insert the User in DB
     await db.collection('users')
       .insertOne(userExample)
-      .then((doc) => console.log(`Successfully inserted user ${i}`))
+      .then(() => console.log(`Successfully inserted user ${i}`))
       .catch((err) => console.error('ERROR while inserting User: \n', err));
   }
 
@@ -154,7 +154,7 @@ MongoClient.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true 
     // Insert Related Publications in DB
     await db.collection('relatedPublications')
       .insertMany(randomRelatedPublications)
-      .then((doc) => console.log(`Successfully inserted related publications for ${insertedPublication._id}`))
+      .then(() => console.log(`Successfully inserted related publications for ${insertedPublication._id}`))
       .catch((err) => console.error(`ERROR while inserting related publications for ${insertedPublication._id}: \n`, err));
   }
 

@@ -1,8 +1,7 @@
 const PDFDocument = require('pdfkit');
 const debug = require('debug');
-const PDFKitHTML = require("@shipper/pdfkit-html-simple");
+const PDFKitHTML = require('@shipper/pdfkit-html-simple');
 const _ = require('lodash');
-const fs = require('fs');
 
 const PublicationsModel = require('../../models/publications');
 const ObjectID = require('../../lib/mongo').ObjectID;
@@ -246,21 +245,17 @@ function downloadPublication(req, res) {
     doc
       .fontSize(16)
       .fillColor('#9955de')
-      .text('Full Text')
+      .text('Full Text');
 
     doc.moveDown();
 
     // Add content
     doc
-    .fontSize(12)
-    .fillColor('black')
+      .fontSize(12)
+      .fillColor('black');
 
-    await PDFKitHTML.parse(text).then(transformations =>
-      transformations.reduce((promise, transformation) =>
-        promise.then(transformation).then(doc => doc.moveDown()),
-        Promise.resolve(doc)
-      )
-    );
+    await PDFKitHTML.parse(text).then((transformations) => transformations.reduce((promise, transformation) => promise.then(transformation).then((pdfDoc) => pdfDoc.moveDown()),
+      Promise.resolve(doc)));
 
     // Finished
     doc.end();
