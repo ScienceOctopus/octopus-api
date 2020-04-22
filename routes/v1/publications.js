@@ -1,7 +1,6 @@
-const PDFDocument = require('pdfkit');
 const debug = require('debug');
-const PDFKitHTML = require('@shipper/pdfkit-html-simple');
 const _ = require('lodash');
+const pdf = require('html-pdf');
 
 const PublicationsModel = require('../../models/publications');
 const ObjectID = require('../../lib/mongo').ObjectID;
@@ -180,8 +179,6 @@ function downloadPublication(req, res) {
     const publicationUrl = `${baseUrl}/publications/view/${publicationID}`;
     const authorUrl = `${baseUrl}/users/view/${authorData.orcidId}`;
 
-    const doc = new PDFDocument({ compress: false });
-
     // transform "2019-11-13 00:00:00" to "2019-11-13"
     const splittedDate = dateCreated.split(' ')[0];
 
@@ -191,78 +188,83 @@ function downloadPublication(req, res) {
     // .image('../../public/octopus.png', 320, 280, {scale: 0.25})
     // .text('Scale', 320, 265);
 
-    doc
-      .fillColor('grey')
-      .fontSize(10)
-      .text('Publication id: ', 20, 20, {
-        continued: true,
-      })
-      .fillColor('#337ab7')
-      .text(publicationID, {
-        continued: false,
-        link: publicationUrl,
-      })
-      .fillColor('grey')
-      .text(`Date created: ${splittedDate}`)
-      .text(`Version number: ${revision}`)
-      .text('Authors: ', {
-        continued: !!authorData.fullName,
-      })
-      .fillColor('#337ab7')
-      .text(authorData.fullName, {
-        continued: false,
-        link: authorUrl,
-      })
-      .fillColor('grey')
-      .text('Collaborators: ', {
-        continued: true,
+    let collaboratorsHTML = '';
+
+    if (!_.isEmpty(collaboratorsData)) {
+      const numberOfCollabs = collaboratorsData.length;
+
+      collaboratorsData.forEach((collaborator) => {
+        const userUrl = `${baseUrl}/users/view/${collaborator.orcidId}`;
+        let html;
+
+        if (numberOfCollabs === 1) {
+          html = `<a href=${userUrl} target="_blank" style="color: #337ab7; text-decoration: none;">${collaborator.fullName}</a>, `;
+        } else {
+          html = `<a href=${userUrl} target="_blank" style="color: #337ab7; text-decoration: none;">${collaborator.fullName}</a>`;
+        }
+
+        collaboratorsHTML = collaboratorsHTML.concat(html);
       });
+    }
 
-    collaboratorsData.forEach((collaborator) => {
-      const userUrl = `${baseUrl}/users/view/${collaborator.orcidId}`;
+    const headerHTML = `
+      <div id="pageHeader-first" style="margin-bottom: 0;">
+        <span style="color: grey; font-size: 10px">
+          Publication id:
+          <a href=${publicationUrl} target="_blank" style="color: #337ab7; text-decoration: none;">${publicationID}</a>
+        </span>
+        <br/>
 
-      doc
-        .fillColor('#337ab7')
-        .text(collaborator.fullName, {
-          continued: false,
-          link: userUrl,
-        });
-    });
+        <span style="color: grey; font-size: 10px">
+          Date created: ${splittedDate}
+        </span>
+        <br/>
 
-    doc.moveDown();
-    doc.moveDown();
+        <span style="color: grey; font-size: 10px">
+          Version number: ${revision}
+        </span>
+        <br/>
 
-    doc
-      .fillColor('black')
-      .fontSize(20)
-      .text(title, {
-        align: 'center',
-        indent: 30,
+        <span style="color: grey; font-size: 10px">
+          Authors:
+          <a href=${authorUrl} target="_blank" style="color: #337ab7; text-decoration: none;">${authorData.fullName}</a>
+        </span>
+        <br/>
+
+        <span style="color: grey; font-size: 10px">
+          Collaborators:
+          ${collaboratorsHTML}
+        </span>
+      </div>
+    `;
+
+    const contentHTML = `
+      <p style="text-align: center; font-size: 20px; text-indent: 30; margin-top: 0"> ${title} </p>
+      <p style="font-size: 16px; color: #9955de;"> Full Text </p>
+      <p style="font-size: 12px;"> ${text} </p>
+    `;
+
+    const html = `${headerHTML} ${contentHTML}`;
+
+    const options = {
+      format: 'A4',
+      border: {
+        top: '0.5cm',
+        right: '0.5cm',
+        bottom: '0.5cm',
+        left: '0.5cm',
+      },
+    };
+
+    pdf.create(html, options)
+      .toStream((err, stream) => {
+        if (err) return res.end(err.stack);
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename=${publicationID}.pdf`);
+
+        stream.pipe(res);
       });
-
-    doc.moveDown();
-
-    doc
-      .fontSize(16)
-      .fillColor('#9955de')
-      .text('Full Text');
-
-    doc.moveDown();
-
-    // Add content
-    doc
-      .fontSize(12)
-      .fillColor('black');
-
-    await PDFKitHTML.parse(text).then((transformations) => transformations.reduce((promise, transformation) => promise.then(transformation).then((pdfDoc) => pdfDoc.moveDown()),
-      Promise.resolve(doc)));
-
-    // Finished
-    doc.end();
-
-    const buffers = [];
-    doc.on('data', buffers.push.bind(buffers));
-    doc.on('end', () => res.end(Buffer.concat(buffers), 'binary'));
   });
 }
 
