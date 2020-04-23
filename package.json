@@ -7,7 +7,7 @@
     "dev": "nodemon -e js main.js",
     "start": "node main.js",
     "lint": "eslint .",
-    "migrate": "node migrations/insertSampleData.js",
+    "migrate": "node migrations/001-insert-initial-data.js",
     "generate-docs": "apidoc -i routes/ -o docs/",
     "postinstall": "echo \"Generating docs...\" && npm run --silent generate-docs"
   },
