@@ -176,8 +176,14 @@ function downloadPublication(req, res) {
     });
 
     const { baseurl: baseUrl } = req.headers;
-    const publicationUrl = `${baseUrl}/publications/view/${publicationID}`;
-    const authorUrl = `${baseUrl}/users/view/${authorData.orcidId}`;
+    let protocol = '';
+
+    if (baseUrl === 'localhost:3000') {
+      protocol = 'http://';
+    }
+
+    const publicationUrl = `${protocol}${baseUrl}/publications/view/${publicationID}`;
+    const authorUrl = `${protocol}${baseUrl}/users/view/${authorData.orcidId}`;
 
     // transform "2019-11-13 00:00:00" to "2019-11-13"
     const splittedDate = dateCreated.split(' ')[0];
@@ -208,30 +214,30 @@ function downloadPublication(req, res) {
     }
 
     const headerHTML = `
-      <div id="pageHeader-first" style="margin-bottom: 0;">
-        <span style="color: grey; font-size: 10px">
+      <div id="pageHeader-first" style="color: grey; font-size: 10px">
+        <span>
           Publication id:
           <a href=${publicationUrl} target="_blank" style="color: #337ab7; text-decoration: none;">${publicationID}</a>
         </span>
         <br/>
 
-        <span style="color: grey; font-size: 10px">
+        <span>
           Date created: ${splittedDate}
         </span>
         <br/>
 
-        <span style="color: grey; font-size: 10px">
+        <span>
           Version number: ${revision}
         </span>
         <br/>
 
-        <span style="color: grey; font-size: 10px">
+        <span>
           Authors:
           <a href=${authorUrl} target="_blank" style="color: #337ab7; text-decoration: none;">${authorData.fullName}</a>
         </span>
         <br/>
 
-        <span style="color: grey; font-size: 10px">
+        <span>
           Collaborators:
           ${collaboratorsHTML}
         </span>
@@ -244,7 +250,11 @@ function downloadPublication(req, res) {
       <p style="font-size: 12px;"> ${text} </p>
     `;
 
-    const html = `${headerHTML} ${contentHTML}`;
+    const html = `
+      <div style="font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%">
+        ${headerHTML} ${contentHTML}
+      </div>
+    `;
 
     const options = {
       format: 'A4',
