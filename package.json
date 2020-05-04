@@ -8,6 +8,7 @@
     "start": "node main.js",
     "lint": "eslint .",
     "migrate": "node migrations/001-insert-initial-data.js",
+    "migrate:covid": "node migrations/002-insert-covid-data.js",
     "generate-docs": "apidoc -i routes/ -o docs/",
     "postinstall": "echo \"Generating docs...\" && npm run --silent generate-docs"
   },

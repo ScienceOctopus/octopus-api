@@ -4,4 +4,4 @@ COPY . /app
 WORKDIR /app
 RUN npm install --production
 
-CMD npm run migrate & node main.js
+CMD npm run migrate & npm run migrate:covid & node main.js
